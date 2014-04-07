@@ -23,18 +23,25 @@
 	$config = __DIR__."/lamp_files/config.ini";
 	if($ini_array = parse_ini_file($config)){
 		foreach ($ini_array as $key => $value) {
-			if(strtoupper($key) == PHPMYADMINFOLDERNAME){
+			if(strtoupper($key) == DATABASECLIENTLOCATION){
 				if(!opendir($value)){
-					echo '<div class="alert alert-danger"><strong>Warning!</strong> phpMyAdmin directory isn\'t valid, please watch "'.$config.'".</div>';
-					define("PHPMYADMIN", null);
+					echo '<div class="alert alert-danger"><strong>Warning!</strong> Data base client directory isn\'t valid, please watch "'.$config.'".</div>';
+					define("DBCLIENTLOC", null);
 				}else{
-					define("PHPMYADMIN", $value);
+					define("DBCLIENTLOC", $value);
+				}		
+			}
+			if(strtoupper($key) == DATABASECLIENTNAME){
+				if(!$value){
+					define("DBCLIENTNAME", "DB Client");
+				}else{
+					define("DBCLIENTNAME", $value);
 				}		
 			}
 		}
 	}else{
 		echo '<div class="alert alert-danger"><strong>Warning!</strong> Missing "lamp_files/config.ini"</div>';
-		define("PHPMYADMIN", null);
+		define("DBCLIENTLOC", null);
 	}
 
 	function apache_version(){
@@ -42,7 +49,9 @@
 		$vers = explode("/", $apacheversion);
 		return $vers[1];
 	}
- 	$apache_version = apache_version();
+	if(apache_version())
+ 		$apache_version = apache_version();
+
  	$php_version = phpversion();
  	
 	$loaded_extensions = get_loaded_extensions();
@@ -57,12 +66,16 @@
 ?>
 <div class="container">
 <div class="col">
-	<!-- <img src="lamp_files/images/logo.jpg" class="img-responsive" alt="Responsive image"> -->
-	<img src="lamp_files/images/logo.png" class="img-responsive" alt="Responsive image">
+	<?php if(apache_version()){?>
+		<img src="lamp_files/images/logo.png" class="img-responsive" alt="Responsive image">
+	<?php }else{ ?>
+		<img src="lamp_files/images/lnamp.png" class="img-responsive" alt="Responsive image">
+	<?php } ?>
 	<hr>
 	<div class="col">
 		<h3>Config server</h3>
-		<ul><strong>Apache version : </strong><?= $apache_version ?></ul>
+		<?php if(apache_version()){?>
+		<ul><strong>Apache version : </strong><?= $apache_version ?></ul><?php } ?>
 		<ul><strong>PHP version : </strong><?= $php_version ?></ul>
 		<ul><strong>MySQL version : </strong><?= $SQL_version ?></ul>
 		<ul><strong>Loaded extensions : </strong>
@@ -91,13 +104,13 @@
 	</div>
 	<div class="col">
 		<h3>Tools</h3>
-		<ul><a href="<?= PHPMYADMIN ?>" class="btn-link"><span class="glyphicon glyphicon-wrench"></span> phpMyAdmin</a></ul>
+		<ul><a href="<?= DBCLIENTLOC ?>" class="btn-link"><span class="glyphicon glyphicon-wrench"></span> <?= DBCLIENTNAME ?></a></ul>
 		<ul><a href="lamp_files/phpinfo.php" class="btn-link"><span class="glyphicon glyphicon-wrench"></span> phpinfo()</a></ul>	
 	</div>
 	<div class="col">
 		<h3>Projects</h3>		
 		<?php 
-			$projectsListIgnore = array ('.','..','lamp_files', PHPMYADMIN);
+			$projectsListIgnore = array ('.','..','lamp_files', DBCLIENTLOC);
 			$handle=opendir(".");
 			$projectContents = '';
 			while ($file = readdir($handle)) 
