@@ -4,6 +4,7 @@
 	<title>LAMPSERVER</title>
 	<meta charset="UTF-8">
 	<meta name="author" content="Padow">
+	<link rel="icon" type="image/x-icon" href="lamp_files/images/favicon.png">
 	<!-- Bootstrap -->
     <link href="lamp_files/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -119,7 +120,7 @@
   <hr>
     <div class="col-md-12">
       <div class="col-md-8">
-        <a href="#">Github</a>
+        <a href="https://github.com/Padow/lamp">Github</a>
       </div>
       <div class="col-md-4 pull-right">
         <p class="muted pull-right">© 2014 Padow. All rights reserved</p>
