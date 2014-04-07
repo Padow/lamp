@@ -1,7 +1,7 @@
 lamp
 ====
 
-lamp server interface for linux
+Localhost interface for linux
 
 ### Installation
 
