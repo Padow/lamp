@@ -4,7 +4,7 @@
 	<title>LAMPSERVER</title>
 	<meta charset="UTF-8">
 	<meta name="author" content="Padow">
-	<link rel="icon" type="image/x-icon" href="lamp_files/images/favicon.png">
+	<link rel="icon" type="image/x-icon" href="lamp_files/images/favicon.ico">
 	<!-- Bootstrap -->
     <link href="lamp_files/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
