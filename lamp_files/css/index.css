@@ -1,6 +1,8 @@
 .noborder{
-	border: none !important;
-	white-space: nowrap;
+	/*border: none !important;*/
+	/*width: auto;*/
+	/*white-space: nowrap;*/
+	
 }
 
 .link{
@@ -34,4 +36,19 @@ height:80px;
 position:absolute;
 bottom:0;
 left:0;
+}
+
+.no-padd{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.extention, .module{
+	display: inline-block;
+	white-space:pre;
+	width: auto;
+}
+
+.tt{
+	display: none;
 }
