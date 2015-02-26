@@ -19,31 +19,8 @@
 <body>
 <div id="wrapper">
 <div id="content">
-<?php 
-	$config = __DIR__."/lamp_files/config.ini";
-	if($ini_array = parse_ini_file($config)){
-		foreach ($ini_array as $key => $value) {
-			if(strtoupper($key) == DATABASECLIENTLOCATION){
-				if(!opendir($value)){
-					echo '<div class="alert alert-danger"><strong>Warning!</strong> Data base client directory isn\'t valid, please watch "'.$config.'".</div>';
-					define("DBCLIENTLOC", null);
-				}else{
-					define("DBCLIENTLOC", $value);
-				}		
-			}
-			if(strtoupper($key) == DATABASECLIENTNAME){
-				if(!$value){
-					define("DBCLIENTNAME", "DB Client");
-				}else{
-					define("DBCLIENTNAME", $value);
-				}		
-			}
-		}
-	}else{
-		echo '<div class="alert alert-danger"><strong>Warning!</strong> Missing "lamp_files/config.ini"</div>';
-		define("DBCLIENTLOC", null);
-	}
-
+<?php
+	
 	function apache_version(){
 		$apacheversion = apache_get_version();
 		$vers = explode("/", $apacheversion);
@@ -126,13 +103,23 @@
 	</div>
 	<div class="col-md-12">
 		<h3>Tools</h3>
-		<ul><a href="<?= DBCLIENTLOC ?>" class="btn-link"><span class="glyphicon glyphicon-wrench"></span> <?= DBCLIENTNAME ?></a></ul>
+		<?php 
+			$projectsListIgnore = array ('.','..','lamp_files');
+			$Jconfig = __DIR__."/lamp_files/config.json";
+			$dbcli = json_decode(file_get_contents($Jconfig));
+			foreach ($dbcli->{'dbclient'} as $key => $value) {
+				array_push($projectsListIgnore, $value->{'dataBaseClientLocation'});
+				echo '<ul><a href="'.$value->{'dataBaseClientLocation'}.'" class="btn-link"><span class="glyphicon glyphicon-wrench"></span> '.$value->{'dataBaseClientName'}.'</a></ul>';
+			}
+
+		?>
+		
 		<ul><a href="lamp_files/phpinfo.php" class="btn-link"><span class="glyphicon glyphicon-wrench"></span> phpinfo()</a></ul>	
 	</div>
 	<div class="col-md-12">
 		<h3>Projects</h3>		
 		<?php 
-			$projectsListIgnore = array ('.','..','lamp_files', DBCLIENTLOC);
+			
 			$handle=opendir(".");
 			$projectContents = '';
 			while ($file = readdir($handle)) 

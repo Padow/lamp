@@ -1,0 +1,12 @@
+{
+	"dbclient":[
+		{
+			"dataBaseClientName":"phpMyAdmin",
+			"dataBaseClientLocation":"phpMyAdmin"
+		},
+		{
+			"dataBaseClientName":"pgAdmin",
+			"dataBaseClientLocation":"phpPgAdmin"
+		}
+	]
+}
